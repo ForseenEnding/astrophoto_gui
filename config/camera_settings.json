@@ -1,0 +1,1159 @@
+[
+    {
+        "name": "syncdatetimeutc",
+        "type": "toggle",
+        "label": "Synchronize camera date and time with PC (UTC)",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "syncdatetime",
+        "type": "toggle",
+        "label": "Synchronize camera date and time with PC",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "uilock",
+        "type": "toggle",
+        "label": "UI Lock",
+        "readonly": 0,
+        "default_value": 2,
+        "choices": []
+    },
+    {
+        "name": "popupflash",
+        "type": "toggle",
+        "label": "Popup Flash",
+        "readonly": 0,
+        "default_value": 2,
+        "choices": []
+    },
+    {
+        "name": "autofocusdrive",
+        "type": "toggle",
+        "label": "Drive Canon DSLR Autofocus",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "manualfocusdrive",
+        "type": "radio",
+        "label": "Drive Canon DSLR Manual focus",
+        "readonly": 0,
+        "default_value": "None",
+        "choices": [
+            "Near 1",
+            "Near 2",
+            "Near 3",
+            "None",
+            "Far 1",
+            "Far 2",
+            "Far 3"
+        ]
+    },
+    {
+        "name": "cancelautofocus",
+        "type": "toggle",
+        "label": "Cancel Canon DSLR Autofocus",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "eoszoom",
+        "type": "text",
+        "label": "Canon EOS Zoom",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "eoszoomposition",
+        "type": "text",
+        "label": "Canon EOS Zoom Position",
+        "readonly": 0,
+        "default_value": "0,0",
+        "choices": []
+    },
+    {
+        "name": "viewfinder",
+        "type": "toggle",
+        "label": "Canon EOS Viewfinder",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "eosremoterelease",
+        "type": "radio",
+        "label": "Canon EOS Remote Release",
+        "readonly": 0,
+        "default_value": "None",
+        "choices": [
+            "None",
+            "Press Half",
+            "Press Full",
+            "Release Half",
+            "Release Full",
+            "Immediate",
+            "Press 1",
+            "Press 2",
+            "Press 3",
+            "Release 1",
+            "Release 2",
+            "Release 3"
+        ]
+    },
+    {
+        "name": "eosmoviemode",
+        "type": "toggle",
+        "label": "Movie Mode",
+        "readonly": 0,
+        "default_value": 2,
+        "choices": []
+    },
+    {
+        "name": "opcode",
+        "type": "text",
+        "label": "PTP Opcode",
+        "readonly": 0,
+        "default_value": "0x1001,0xparam1,0xparam2",
+        "choices": []
+    },
+    {
+        "name": "datetimeutc",
+        "type": "date",
+        "label": "Camera Date and Time",
+        "readonly": 0,
+        "default_value": 1752893099,
+        "choices": []
+    },
+    {
+        "name": "datetime",
+        "type": "date",
+        "label": "Camera Date and Time",
+        "readonly": 0,
+        "default_value": 1752893099,
+        "choices": []
+    },
+    {
+        "name": "reviewtime",
+        "type": "radio",
+        "label": "Quick Review Time",
+        "readonly": 0,
+        "default_value": "2 seconds",
+        "choices": [
+            "None",
+            "2 seconds",
+            "4 seconds",
+            "8 seconds",
+            "Hold"
+        ]
+    },
+    {
+        "name": "output",
+        "type": "radio",
+        "label": "Camera Output",
+        "readonly": 0,
+        "default_value": "Off",
+        "choices": [
+            "Off",
+            "TFT",
+            "PC",
+            "TFT + PC",
+            "MOBILE",
+            "TFT + MOBILE",
+            "PC + MOBILE",
+            "TFT + PC + MOBILE"
+        ]
+    },
+    {
+        "name": "movierecordtarget",
+        "type": "radio",
+        "label": "Recording Destination",
+        "readonly": 0,
+        "default_value": "None",
+        "choices": [
+            "None"
+        ]
+    },
+    {
+        "name": "evfmode",
+        "type": "radio",
+        "label": "EVF Mode",
+        "readonly": 0,
+        "default_value": "1",
+        "choices": [
+            "1",
+            "0"
+        ]
+    },
+    {
+        "name": "ownername",
+        "type": "text",
+        "label": "Owner Name",
+        "readonly": 0,
+        "default_value": "",
+        "choices": []
+    },
+    {
+        "name": "artist",
+        "type": "text",
+        "label": "Artist",
+        "readonly": 0,
+        "default_value": "",
+        "choices": []
+    },
+    {
+        "name": "copyright",
+        "type": "text",
+        "label": "Copyright",
+        "readonly": 0,
+        "default_value": "",
+        "choices": []
+    },
+    {
+        "name": "customfuncex",
+        "type": "text",
+        "label": "Custom Functions Ex",
+        "readonly": 0,
+        "default_value": "98,4,1,20,2,101,1,0,103,1,0,2,14,1,203,1,0,3,20,2,50e,1,0,60f,1,0,4,2c,3,701,1,0,704,1,0,811,1,0,",
+        "choices": []
+    },
+    {
+        "name": "focusinfo",
+        "type": "text",
+        "label": "Focus Info",
+        "readonly": 1,
+        "default_value": "{}",
+        "choices": []
+    },
+    {
+        "name": "focusarea",
+        "type": "text",
+        "label": "Focus Area",
+        "readonly": 0,
+        "default_value": "3",
+        "choices": []
+    },
+    {
+        "name": "strobofiring",
+        "type": "radio",
+        "label": "Strobo Firing",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": [
+            "0",
+            "1"
+        ]
+    },
+    {
+        "name": "flashcharged",
+        "type": "text",
+        "label": "Flash Charging State",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "autopoweroff",
+        "type": "text",
+        "label": "Auto Power Off",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "depthoffield",
+        "type": "text",
+        "label": "Depth of Field",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "capturetarget",
+        "type": "radio",
+        "label": "Capture Target",
+        "readonly": 0,
+        "default_value": "Internal RAM",
+        "choices": [
+            "Internal RAM",
+            "Memory card"
+        ]
+    },
+    {
+        "name": "capture",
+        "type": "toggle",
+        "label": "Capture",
+        "readonly": 0,
+        "default_value": 0,
+        "choices": []
+    },
+    {
+        "name": "remotemode",
+        "type": "text",
+        "label": "Remote Mode",
+        "readonly": 0,
+        "default_value": "1",
+        "choices": []
+    },
+    {
+        "name": "eventmode",
+        "type": "text",
+        "label": "Event Mode",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "testolc",
+        "type": "toggle",
+        "label": "Test OLC",
+        "readonly": 0,
+        "default_value": 2,
+        "choices": []
+    },
+    {
+        "name": "serialnumber",
+        "type": "text",
+        "label": "Serial Number",
+        "readonly": 1,
+        "default_value": "d82adefe65ea4036a6fe226778d6f7fe",
+        "choices": []
+    },
+    {
+        "name": "manufacturer",
+        "type": "text",
+        "label": "Camera Manufacturer",
+        "readonly": 1,
+        "default_value": "Canon Inc.",
+        "choices": []
+    },
+    {
+        "name": "cameramodel",
+        "type": "text",
+        "label": "Camera Model",
+        "readonly": 1,
+        "default_value": "Canon EOS REBEL SL1",
+        "choices": []
+    },
+    {
+        "name": "deviceversion",
+        "type": "text",
+        "label": "Device Version",
+        "readonly": 1,
+        "default_value": "3-1.0.0",
+        "choices": []
+    },
+    {
+        "name": "vendorextension",
+        "type": "text",
+        "label": "Vendor Extension",
+        "readonly": 1,
+        "default_value": "",
+        "choices": []
+    },
+    {
+        "name": "model",
+        "type": "text",
+        "label": "Camera Model",
+        "readonly": 1,
+        "default_value": "2147484486",
+        "choices": []
+    },
+    {
+        "name": "ptpversion",
+        "type": "text",
+        "label": "PTP Version",
+        "readonly": 1,
+        "default_value": "256",
+        "choices": []
+    },
+    {
+        "name": "batterylevel",
+        "type": "text",
+        "label": "Battery Level",
+        "readonly": 1,
+        "default_value": "100%",
+        "choices": []
+    },
+    {
+        "name": "batterylevel",
+        "type": "text",
+        "label": "Battery Level",
+        "readonly": 1,
+        "default_value": "100%",
+        "choices": []
+    },
+    {
+        "name": "mirrorlock",
+        "type": "radio",
+        "label": "Mirror Lock",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": [
+            "0",
+            "1"
+        ]
+    },
+    {
+        "name": "mirrorlockstatus",
+        "type": "text",
+        "label": "Mirror Lock Status",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "mirrordownstatus",
+        "type": "text",
+        "label": "Mirror Down Status",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "lensname",
+        "type": "text",
+        "label": "Lens Name",
+        "readonly": 1,
+        "default_value": "EF-S18-55mm f/3.5-5.6 IS STM",
+        "choices": []
+    },
+    {
+        "name": "eosserialnumber",
+        "type": "text",
+        "label": "Serial Number",
+        "readonly": 1,
+        "default_value": "012070120375",
+        "choices": []
+    },
+    {
+        "name": "shuttercounter",
+        "type": "text",
+        "label": "Shutter Counter",
+        "readonly": 1,
+        "default_value": "3234",
+        "choices": []
+    },
+    {
+        "name": "availableshots",
+        "type": "text",
+        "label": "Available Shots",
+        "readonly": 1,
+        "default_value": "121572",
+        "choices": []
+    },
+    {
+        "name": "eosmovieswitch",
+        "type": "text",
+        "label": "Movie Switch",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": []
+    },
+    {
+        "name": "imageformat",
+        "type": "radio",
+        "label": "Image Format",
+        "readonly": 0,
+        "default_value": "L",
+        "choices": [
+            "L",
+            "cL",
+            "M",
+            "cM",
+            "S1",
+            "cS1",
+            "S2",
+            "S3",
+            "RAW + L",
+            "RAW"
+        ]
+    },
+    {
+        "name": "imageformatsd",
+        "type": "radio",
+        "label": "Image Format SD",
+        "readonly": 0,
+        "default_value": "L",
+        "choices": [
+            "L",
+            "cL",
+            "M",
+            "cM",
+            "S1",
+            "cS1",
+            "S2",
+            "S3",
+            "RAW + L",
+            "RAW"
+        ]
+    },
+    {
+        "name": "imageformatcf",
+        "type": "radio",
+        "label": "Image Format CF",
+        "readonly": 0,
+        "default_value": "L",
+        "choices": [
+            "L",
+            "cL",
+            "M",
+            "cM",
+            "S1",
+            "cS1",
+            "S2",
+            "S3",
+            "RAW + L",
+            "RAW"
+        ]
+    },
+    {
+        "name": "iso",
+        "type": "radio",
+        "label": "ISO Speed",
+        "readonly": 0,
+        "default_value": "Auto",
+        "choices": [
+            "Auto",
+            "100",
+            "200",
+            "400",
+            "800",
+            "1600",
+            "3200",
+            "6400",
+            "12800"
+        ]
+    },
+    {
+        "name": "whitebalance",
+        "type": "radio",
+        "label": "WhiteBalance",
+        "readonly": 0,
+        "default_value": "Auto",
+        "choices": [
+            "Auto",
+            "Daylight",
+            "Shadow",
+            "Cloudy",
+            "Tungsten",
+            "Fluorescent",
+            "Flash",
+            "Manual"
+        ]
+    },
+    {
+        "name": "colortemperature",
+        "type": "radio",
+        "label": "Color Temperature",
+        "readonly": 0,
+        "default_value": "5200",
+        "choices": [
+            "2500",
+            "2600",
+            "2700",
+            "2800",
+            "2900",
+            "3000",
+            "3100",
+            "3200",
+            "3300",
+            "3400",
+            "3500",
+            "3600",
+            "3700",
+            "3800",
+            "3900",
+            "4000",
+            "4100",
+            "4200",
+            "4300",
+            "4400",
+            "4500",
+            "4600",
+            "4700",
+            "4800",
+            "4900",
+            "5000",
+            "5100",
+            "5200",
+            "5300",
+            "5400",
+            "5500",
+            "5600",
+            "5700",
+            "5800",
+            "5900",
+            "6000",
+            "6100",
+            "6200",
+            "6300",
+            "6400",
+            "6500",
+            "6600",
+            "6700",
+            "6800",
+            "6900",
+            "7000",
+            "7100",
+            "7200",
+            "7300",
+            "7400",
+            "7500",
+            "7600",
+            "7700",
+            "7800",
+            "7900",
+            "8000",
+            "8100",
+            "8200",
+            "8300",
+            "8400",
+            "8500",
+            "8600",
+            "8700",
+            "8800",
+            "8900",
+            "9000",
+            "9100",
+            "9200",
+            "9300",
+            "9400",
+            "9500",
+            "9600",
+            "9700",
+            "9800",
+            "9900",
+            "10000"
+        ]
+    },
+    {
+        "name": "whitebalanceadjusta",
+        "type": "radio",
+        "label": "WhiteBalance Adjust A",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": [
+            "-9",
+            "-8",
+            "-7",
+            "-6",
+            "-5",
+            "-4",
+            "-3",
+            "-2",
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+        ]
+    },
+    {
+        "name": "whitebalanceadjustb",
+        "type": "radio",
+        "label": "WhiteBalance Adjust B",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": [
+            "-9",
+            "-8",
+            "-7",
+            "-6",
+            "-5",
+            "-4",
+            "-3",
+            "-2",
+            "-1",
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+        ]
+    },
+    {
+        "name": "whitebalancexa",
+        "type": "radio",
+        "label": "WhiteBalance X A",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": [
+            "0",
+            "1",
+            "2",
+            "3"
+        ]
+    },
+    {
+        "name": "whitebalancexb",
+        "type": "radio",
+        "label": "WhiteBalance X B",
+        "readonly": 1,
+        "default_value": "0",
+        "choices": [
+            "0",
+            "1",
+            "2",
+            "3"
+        ]
+    },
+    {
+        "name": "colorspace",
+        "type": "radio",
+        "label": "Color Space",
+        "readonly": 0,
+        "default_value": "sRGB",
+        "choices": [
+            "sRGB",
+            "AdobeRGB"
+        ]
+    },
+    {
+        "name": "exposurecompensation",
+        "type": "radio",
+        "label": "Exposure Compensation",
+        "readonly": 0,
+        "default_value": "0",
+        "choices": [
+            "0"
+        ]
+    },
+    {
+        "name": "focusmode",
+        "type": "radio",
+        "label": "Focus Mode",
+        "readonly": 0,
+        "default_value": "Manual",
+        "choices": [
+            "One Shot",
+            "AI Focus",
+            "AI Servo",
+            "Manual"
+        ]
+    },
+    {
+        "name": "continuousaf",
+        "type": "radio",
+        "label": "Continuous AF",
+        "readonly": 0,
+        "default_value": "On",
+        "choices": [
+            "Off",
+            "On"
+        ]
+    },
+    {
+        "name": "aspectratio",
+        "type": "radio",
+        "label": "Aspect Ratio",
+        "readonly": 0,
+        "default_value": "3:2",
+        "choices": [
+            "3:2",
+            "4:3",
+            "16:9",
+            "1:1"
+        ]
+    },
+    {
+        "name": "afmethod",
+        "type": "radio",
+        "label": "AF Method",
+        "readonly": 0,
+        "default_value": "LiveFace",
+        "choices": [
+            "LiveFace",
+            "LiveMulti",
+            "Live",
+            "Quick"
+        ]
+    },
+    {
+        "name": "storageid",
+        "type": "text",
+        "label": "Storage Device",
+        "readonly": 0,
+        "default_value": "00020001",
+        "choices": []
+    },
+    {
+        "name": "highisonr",
+        "type": "radio",
+        "label": "High ISO Noise Reduction",
+        "readonly": 0,
+        "default_value": "Off",
+        "choices": [
+            "High",
+            "Low",
+            "Off",
+            "Normal",
+            "Multi-Shot"
+        ]
+    },
+    {
+        "name": "autoexposuremode",
+        "type": "radio",
+        "label": "Canon Auto Exposure Mode",
+        "readonly": 0,
+        "default_value": "Manual",
+        "choices": [
+            "P",
+            "TV",
+            "AV",
+            "Manual",
+            "Bulb",
+            "A_DEP",
+            "DEP",
+            "Custom",
+            "Lock",
+            "Green",
+            "Night Portrait",
+            "Sports",
+            "Portrait",
+            "Landscape",
+            "Closeup",
+            "Flash Off",
+            "C2",
+            "C3",
+            "Creative Auto",
+            "Movie",
+            "Auto",
+            "Handheld Night Scene",
+            "HDR Backlight Control",
+            "SCN",
+            "Food",
+            "Grainy B/W",
+            "Soft focus",
+            "Toy camera effect",
+            "Fish-eye effect",
+            "Water painting effect",
+            "Miniature effect",
+            "HDR art standard",
+            "HDR art vivid",
+            "HDR art bold",
+            "HDR art embossed",
+            "Panning",
+            "HDR",
+            "Self Portrait",
+            "Hybrid Auto",
+            "Smooth skin",
+            "Fv"
+        ]
+    },
+    {
+        "name": "autoexposuremodedial",
+        "type": "radio",
+        "label": "Canon Auto Exposure Mode Dial",
+        "readonly": 0,
+        "default_value": "Manual",
+        "choices": [
+            "P",
+            "TV",
+            "AV",
+            "Manual",
+            "Bulb",
+            "A_DEP",
+            "DEP",
+            "Custom",
+            "Lock",
+            "Green",
+            "Night Portrait",
+            "Sports",
+            "Portrait",
+            "Landscape",
+            "Closeup",
+            "Flash Off",
+            "C2",
+            "C3",
+            "Creative Auto",
+            "Movie",
+            "Auto",
+            "Handheld Night Scene",
+            "HDR Backlight Control",
+            "SCN",
+            "Food",
+            "Grainy B/W",
+            "Soft focus",
+            "Toy camera effect",
+            "Fish-eye effect",
+            "Water painting effect",
+            "Miniature effect",
+            "HDR art standard",
+            "HDR art vivid",
+            "HDR art bold",
+            "HDR art embossed",
+            "Panning",
+            "HDR",
+            "Self Portrait",
+            "Hybrid Auto",
+            "Smooth skin",
+            "Fv"
+        ]
+    },
+    {
+        "name": "drivemode",
+        "type": "radio",
+        "label": "Drive Mode",
+        "readonly": 0,
+        "default_value": "Single",
+        "choices": [
+            "Single",
+            "Continuous",
+            "Single silent",
+            "Continuous silent",
+            "Timer 10 sec",
+            "Timer 2 sec",
+            "Continuous timer"
+        ]
+    },
+    {
+        "name": "picturestyle",
+        "type": "radio",
+        "label": "Picture Style",
+        "readonly": 0,
+        "default_value": "Auto",
+        "choices": [
+            "Auto",
+            "Standard",
+            "Portrait",
+            "Landscape",
+            "Neutral",
+            "Faithful",
+            "Monochrome",
+            "User defined 1",
+            "User defined 2",
+            "User defined 3"
+        ]
+    },
+    {
+        "name": "aperture",
+        "type": "radio",
+        "label": "Aperture",
+        "readonly": 0,
+        "default_value": "5.6",
+        "choices": [
+            "5",
+            "5.6",
+            "6.3",
+            "7.1",
+            "8",
+            "9",
+            "10",
+            "11",
+            "13",
+            "14",
+            "16",
+            "18",
+            "20",
+            "22",
+            "25",
+            "29",
+            "32"
+        ]
+    },
+    {
+        "name": "shutterspeed",
+        "type": "radio",
+        "label": "Shutter Speed",
+        "readonly": 0,
+        "default_value": "1/125",
+        "choices": [
+            "bulb",
+            "30",
+            "25",
+            "20",
+            "15",
+            "13",
+            "10.3",
+            "8",
+            "6.3",
+            "5",
+            "4",
+            "3.2",
+            "2.5",
+            "2",
+            "1.6",
+            "1.3",
+            "1",
+            "0.8",
+            "0.6",
+            "0.5",
+            "0.4",
+            "0.3",
+            "1/4",
+            "1/5",
+            "1/6",
+            "1/8",
+            "1/10",
+            "1/13",
+            "1/15",
+            "1/20",
+            "1/25",
+            "1/30",
+            "1/40",
+            "1/50",
+            "1/60",
+            "1/80",
+            "1/100",
+            "1/125",
+            "1/160",
+            "1/200",
+            "1/250",
+            "1/320",
+            "1/400",
+            "1/500",
+            "1/640",
+            "1/800",
+            "1/1000",
+            "1/1250",
+            "1/1600",
+            "1/2000",
+            "1/2500",
+            "1/3200",
+            "1/4000"
+        ]
+    },
+    {
+        "name": "meteringmode",
+        "type": "radio",
+        "label": "Metering Mode",
+        "readonly": 0,
+        "default_value": "Evaluative",
+        "choices": [
+            "Evaluative",
+            "Partial",
+            "Spot",
+            "Center-weighted average"
+        ]
+    },
+    {
+        "name": "liveviewsize",
+        "type": "radio",
+        "label": "Live View Size",
+        "readonly": 0,
+        "default_value": "val 0",
+        "choices": [
+            "Large",
+            "Medium"
+        ]
+    },
+    {
+        "name": "bracketmode",
+        "type": "radio",
+        "label": "Bracket Mode",
+        "readonly": 0,
+        "default_value": "Unknown value 0000",
+        "choices": [
+            "Unknown value 0000"
+        ]
+    },
+    {
+        "name": "aeb",
+        "type": "radio",
+        "label": "Auto Exposure Bracketing",
+        "readonly": 0,
+        "default_value": "off",
+        "choices": [
+            "off",
+            "+/- 1/3",
+            "+/- 2/3",
+            "+/- 1",
+            "+/- 1 1/3",
+            "+/- 1 2/3",
+            "+/- 2"
+        ]
+    },
+    {
+        "name": "alomode",
+        "type": "radio",
+        "label": "Auto Lighting Optimization",
+        "readonly": 0,
+        "default_value": "Unknown value 10003",
+        "choices": [
+            "x3",
+            "Unknown value 10003"
+        ]
+    },
+    {
+        "name": "movieservoaf",
+        "type": "radio",
+        "label": "Movie Servo AF",
+        "readonly": 0,
+        "default_value": "On",
+        "choices": [
+            "On"
+        ]
+    },
+    {
+        "name": "d049",
+        "type": "text",
+        "label": "Model ID",
+        "readonly": 1,
+        "default_value": "-2147482810",
+        "choices": []
+    },
+    {
+        "name": "d402",
+        "type": "text",
+        "label": "Friendly Device Name",
+        "readonly": 1,
+        "default_value": "Canon EOS REBEL SL1",
+        "choices": []
+    },
+    {
+        "name": "d407",
+        "type": "text",
+        "label": "Perceived Device Type",
+        "readonly": 1,
+        "default_value": "1",
+        "choices": []
+    },
+    {
+        "name": "d406",
+        "type": "text",
+        "label": "Session Initiator Info",
+        "readonly": 0,
+        "default_value": "Windows/10.0.26100 MTPClassDriver/10.0.26100.0",
+        "choices": []
+    },
+    {
+        "name": "d303",
+        "type": "text",
+        "label": "PTP Property 0xd303",
+        "readonly": 1,
+        "default_value": "1",
+        "choices": []
+    },
+    {
+        "name": "5001",
+        "type": "menu",
+        "label": "Battery Level",
+        "readonly": 1,
+        "default_value": "100",
+        "choices": [
+            "100",
+            "0",
+            "75",
+            "50"
+        ]
+    }
+]
