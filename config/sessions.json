@@ -1,0 +1,29 @@
+{
+  "sessions": [
+    {
+      "id": "574c1105-8303-4e80-ab25-68891e6d9340",
+      "target": "test",
+      "settings": {
+        "name": "Default",
+        "settings": {
+          "aperture": "5.6",
+          "shutterspeed": "1/125",
+          "iso": "1600",
+          "imageformat": "RAW + L",
+          "highisonr": "High",
+          "picturestyle": "Neutral",
+          "colortemperature": "5200",
+          "whitebalance": "Daylight",
+          "colorspace": "AdobeRGB"
+        }
+      },
+      "telescope_name": "Test",
+      "camera_name": "Test",
+      "exposures": 10,
+      "state": "Planned",
+      "created_at": "2025-07-20T08:12:04.572591+00:00",
+      "updated_at": "2025-07-20T08:12:04.585747+00:00",
+      "folder": "sessions"
+    }
+  ]
+}

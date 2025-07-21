@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Default",
+        "settings": {
+            "aperture": "5.6",
+            "shutterspeed": "1/125",
+            "iso": "1600",
+            "imageformat": "RAW + L",
+            "highisonr": "High",
+            "picturestyle": "Neutral",
+            "colortemperature": "5200",
+            "whitebalance": "Daylight",
+            "colorspace": "AdobeRGB"
+        }
+    },
+    {
+        "name": "Live Preview",
+        "settings": {
+            "aperture": "5.6",
+            "iso": "1600",
+            "colorspace": "sRGB",
+            "shutterspeed": "1/15",
+            "picturestyle": "Auto",
+            "whitebalance": "Fluorescent",
+            "colortemperature": "5200"
+        }
+    }
+]

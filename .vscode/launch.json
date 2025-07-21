@@ -9,7 +9,7 @@
             "type": "debugpy",
             "request": "launch",
             "args": ["display=10.0"],
-            "program": "${workspaceFolder}/src/main.py",
+            "program": "${workspaceFolder}/main.py",
             "console": "integratedTerminal"
         }
     ]

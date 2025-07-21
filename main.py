@@ -1,15 +1,24 @@
-import os
+#!/usr/bin/env python3
+"""
+Astrophotography Camera Application
+Main entry point for the application
+"""
 
-from PySide6.QtWidgets import QApplication, QMainWindow
+import sys
+from PySide6.QtWidgets import QApplication
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Camera App")
-        self.setGeometry(100, 100, 800, 600)
+from gui.main_window import MainWindow
 
-if __name__ == "__main__":
-    app = QApplication([])
+def main():
+    """Main application entry point"""
+    app = QApplication(sys.argv)
+    
+    # Create and show the main window
     window = MainWindow()
     window.show()
-    app.exec()  # Add this line to start the event loop
+    
+    # Start the application event loop
+    sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main() 

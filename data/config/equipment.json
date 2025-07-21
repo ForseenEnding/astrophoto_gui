@@ -1,0 +1,20 @@
+{
+    "telescopes": [
+        {
+            "name": "Test",
+            "focal_length": 1.0,
+            "aperture": 1.0
+        }
+    ],
+    "cameras": [
+        {
+            "name": "Test",
+            "sensor_width": 1.0,
+            "sensor_height": 1.0,
+            "pixel_size": 1.0,
+            "pixel_width": 1,
+            "pixel_height": 1,
+            "diffraction_limit": 1.0
+        }
+    ]
+}
