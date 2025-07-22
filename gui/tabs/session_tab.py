@@ -10,9 +10,9 @@ from PySide6.QtCore import Qt, Signal, QTimer, QThread, Signal
 from core.session.sessions import SessionState, session_manager, Session
 from core.camera.camera_settings import SettingProfile
 from core.equipment.equipment import equipment_manager, Telescope, Camera
-from core.camera.camera_controller import camera_controller, CameraStatus
-from gui.widgets.setting_profile_box import SettingProfileBox, ProfileMode
-from gui.widgets.session_dialog import SessionDialog
+from core.camera.camera_manager import camera_manager, CameraStatus
+from gui.widgets.setting_profile_widget import SettingProfileBox, ProfileMode
+from gui.dialogs.session_dialog import SessionDialog
 import logging
 import time
 
@@ -36,13 +36,13 @@ class CaptureSequenceWorker(QThread):
         """Run the capture sequence"""
         try:
             # Ensure camera is connected
-            if camera_controller.get_status() != CameraStatus.CONNECTED:
-                camera_controller.connect()
+            if camera_manager.get_status() != CameraStatus.CONNECTED:
+                camera_manager.connect()
             
             # Apply session settings to camera
             if self.session.settings:
                 settings_dict = self.session.settings.as_dict()["settings"]
-                camera_controller.set_settings(settings_dict)
+                camera_manager.set_settings(settings_dict)
                 logger.info(f"Applied settings: {settings_dict}")
             
             # Create session directory
@@ -62,7 +62,7 @@ class CaptureSequenceWorker(QThread):
                 
                 # Capture image
                 try:
-                    captured_files = camera_controller.capture_image(save_path)
+                    captured_files = camera_manager.capture_image(save_path)
                     if captured_files:
                         self.capture_completed.emit(str(captured_files[0]))
                         logger.info(f"Captured exposure {i+1}/{self.session.exposures}: {captured_files[0]}")
@@ -125,8 +125,8 @@ class SessionTab(QWidget):
         session_manager.current_session_changed.connect(self.on_session_manager_session_changed)
         
         # Camera controller connections
-        camera_controller.camera_status_changed.connect(self.on_camera_status_changed)
-        camera_controller.image_captured.connect(self.on_image_captured)
+        camera_manager.camera_status_changed.connect(self.on_camera_status_changed)
+        camera_manager.image_captured.connect(self.on_image_captured)
         
     def create_session_management_box(self):
         """Create the session management box"""
@@ -435,7 +435,7 @@ class SessionTab(QWidget):
         
     def update_camera_status_display(self):
         """Update camera status display"""
-        status = camera_controller.get_status()
+        status = camera_manager.get_status()
         if status == CameraStatus.CONNECTED:
             self.camera_status_label.setText("Connected")
             self.camera_status_label.setStyleSheet("color: #00ff00; font-size: 10px; font-weight: bold;")
@@ -490,12 +490,12 @@ class SessionTab(QWidget):
     def toggle_camera_connection(self):
         """Toggle camera connection"""
         try:
-            status = camera_controller.get_status()
+            status = camera_manager.get_status()
             if status == CameraStatus.CONNECTED:
-                camera_controller.disconnect()
+                camera_manager.disconnect()
                 self.log_status("Camera disconnected")
             else:
-                camera_controller.connect()
+                camera_manager.connect()
                 self.log_status("Camera connected")
         except Exception as e:
             self.log_status(f"Camera connection error: {e}")

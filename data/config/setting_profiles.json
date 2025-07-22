@@ -17,9 +17,9 @@
         "name": "Live Preview",
         "settings": {
             "aperture": "5.6",
-            "iso": "1600",
+            "iso": "3200",
             "colorspace": "sRGB",
-            "shutterspeed": "1/15",
+            "shutterspeed": "1/5",
             "picturestyle": "Auto",
             "whitebalance": "Fluorescent",
             "colortemperature": "5200"

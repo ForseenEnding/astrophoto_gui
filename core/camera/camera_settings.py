@@ -3,7 +3,7 @@ import gphoto2 as gp
 from enum import Enum
 from PySide6.QtCore import QObject, Signal
 import json
-from core.camera.camera_controller import camera_controller
+from core.camera.camera_manager import camera_manager
 from utils.utils import default_on_exception
 import logging
 from pathlib import Path
@@ -99,7 +99,7 @@ class SettingProfile:
     def apply(self):
         if not self.validate():
             return False
-        camera_controller.set_settings(self.settings)
+        camera_manager.set_settings(self.settings)
         return True
         
     def as_dict(self):
@@ -174,11 +174,7 @@ class SettingProfileManager(QObject):
         return self._profiles.get(name)
         
     def add_profile(self, profile: SettingProfile) -> bool:
-        """Add a new profile"""
-        if profile.name in self._profiles:
-            logger.warning(f"Profile '{profile.name}' already exists")
-            return False
-            
+        """Add a new profile"""           
         self._profiles[profile.name] = profile
         self.save_profiles()
         self.profile_added.emit(profile)

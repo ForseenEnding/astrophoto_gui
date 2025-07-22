@@ -2,15 +2,12 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFrame, 
     QSizePolicy, QSpinBox, QCheckBox
 )
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt
+from core.analysis.analysis_manager import analysis_manager
+from core.camera.preview_manager import preview_manager
 
 class PreviewTab(QWidget):
     """Tab for preview settings and analysis toggle"""
-    # Signals
-    aspect_ratio_changed = Signal(bool)
-    framerate_changed = Signal(int)
-    zoom_changed = Signal(float)
-    analysis_toggled = Signal(bool)
 
     def __init__(self):
         super().__init__()
@@ -22,7 +19,7 @@ class PreviewTab(QWidget):
         layout.setContentsMargins(15, 15, 15, 15)
         layout.setSpacing(10)
 
-        # Title
+        # Title 
         title_label = QLabel("Preview Settings")
         title_label.setStyleSheet("""
             QLabel {
@@ -99,13 +96,10 @@ class PreviewTab(QWidget):
         layout.addStretch()
 
     def setup_connections(self):
-        self.aspect_ratio_checkbox.toggled.connect(self.aspect_ratio_changed.emit)
-        self.framerate_spinbox.valueChanged.connect(self.framerate_changed.emit)
-        self.zoom_spinbox.valueChanged.connect(self._emit_zoom)
-        self.analysis_checkbox.toggled.connect(self.analysis_toggled.emit)
-
-    def _emit_zoom(self, value):
-        self.zoom_changed.emit(float(value))
+        self.aspect_ratio_checkbox.toggled.connect(lambda: preview_manager.set_aspect_ratio(self.aspect_ratio_checkbox.isChecked()))
+        self.framerate_spinbox.valueChanged.connect(lambda: preview_manager.set_framerate(self.framerate_spinbox.value()))
+        self.zoom_spinbox.valueChanged.connect(lambda: preview_manager.set_zoom(self.zoom_spinbox.value()))
+        self.analysis_checkbox.toggled.connect(lambda: analysis_manager.analyze_previews(self.analysis_checkbox.isChecked()))
 
     def set_aspect_ratio(self, keep: bool):
         self.aspect_ratio_checkbox.setChecked(keep)

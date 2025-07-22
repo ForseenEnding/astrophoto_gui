@@ -3,9 +3,12 @@ from datetime import datetime
 from enum import Enum
 from dataclasses import dataclass
 from typing import Optional, List, Dict, Any
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal, Slot, QRunnable
 from pathlib import Path
 import logging
+import numpy as np
+from PIL import Image
+import io
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +40,42 @@ class SettingsChangedEvent:
     settings: Dict[str, str]
     timestamp: datetime = datetime.now()
     
+@dataclass
+class AnalysisEnabledEvent:
+    enabled: bool
+    timestamp: datetime = datetime.now()
+    
+@dataclass
+class PreviewActiveEvent:
+    active: bool
+    timestamp: datetime = datetime.now()
+    
+@dataclass
+class AnalysisResultEvent:
+    result: str
+    timestamp: datetime = datetime.now()
+    
+class AnalysisTask(QRunnable):
+    def __init__(self, image: bytes | Path):
+        super().__init__()
+        self._target_image = image
+        
+    @Slot()
+    def run(self):
+        """Run the analysis task"""
+        logger.info(f"Running analysis task for {self._target_image}")
+        if isinstance(self._target_image, bytes):
+            pil_image = Image.open(io.BytesIO(self._target_image))
+        else:
+            pil_image = Image.open(self._target_image)
+            
+        rgb_array = np.array(pil_image.convert("RGB"))
+        focus_score = detect_focus(rgb_array)
+        logger.info(f"Focus score: {focus_score}")
+        
+        self._emit_analysis_result(focus_score)
 
-class CameraController(QObject):
+class CameraManager(QObject):
     # Signals
     camera_status_changed = Signal(CameraStatusChangedEvent)  # CameraStatusChangedEvent
     image_captured = Signal(CameraImageCapturedEvent)  # CameraImageCapturedEvent
@@ -101,7 +138,7 @@ class CameraController(QObject):
             settings = {}
             
             for name in setting_names:
-                config.get_child_by_name(name)
+                child = config.get_child_by_name(name)
                 if child:
                     settings[name] = child.get_value()
                 else:
@@ -203,7 +240,7 @@ class CameraController(QObject):
             preview_data = self.camera.capture_preview()
             
             # Get preview file
-            preview_file = preview_data.get_data_and_size()
+            preview_file = preview_data.get_data_and_size().tobytes()
             
             self._emit_preview_captured(preview_file)
             logger.debug("Captured preview image")
@@ -216,6 +253,7 @@ class CameraController(QObject):
     
     def _emit_status_changed(self, error_message: Optional[str] = None):
         """Emit camera status changed signal"""
+        logger.debug(f"Camera status changed to {self._status}")
         event = CameraStatusChangedEvent(
             status=self._status,
             error_message=error_message
@@ -229,13 +267,17 @@ class CameraController(QObject):
     
     def _emit_preview_captured(self, image_data: bytes):
         """Emit preview image captured signal"""
+        logger.debug("Captured preview image")
         event = PreviewImageCapturedEvent(image_data=image_data)
         self.preview_image_captured.emit(event)
     
     def _emit_settings_changed(self, settings: Dict[str, str]):
         """Emit settings changed signal"""
+        logger.debug(f"Settings changed: {settings}")
         event = SettingsChangedEvent(settings=settings)
         self.settings_changed.emit(event)
+        
+        
 
 # Global camera controller instance
-camera_controller = CameraController()
+camera_manager = CameraManager()

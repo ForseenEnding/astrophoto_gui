@@ -9,15 +9,11 @@ from PySide6.QtGui import QIcon, QAction
 from gui.tabs.camera_tab import CameraTab
 from gui.tabs.session_tab import SessionTab
 from gui.tabs.preview_tab import PreviewTab
+from core.camera.camera_manager import camera_manager
+from core.camera.preview_manager import preview_manager
 
 class TabbedControlPanel(QWidget):
     """Tabbed control panel with collapsible functionality"""
-    
-    # Signals
-    connect_clicked = Signal()
-    disconnect_clicked = Signal()
-    preview_clicked = Signal()
-    panel_toggled = Signal(bool)  # True when expanded, False when collapsed
     
     def __init__(self):
         super().__init__()
@@ -27,7 +23,6 @@ class TabbedControlPanel(QWidget):
         self.previous_tab_index = -1
         self.setup_ui()
         self.setup_animations()
-        self.setup_connections()
         
     def setup_ui(self):
         """Setup the tabbed control panel UI"""
@@ -77,7 +72,7 @@ class TabbedControlPanel(QWidget):
         """)
         
         # Connect tab change signal to handle collapse functionality
-        self.tab_widget.currentChanged.connect(self.on_tab_changed)
+        self.tab_widget.currentChanged.connect(self._on_tab_changed)
         
         # Add keyboard shortcut for toggling panel
         self.toggle_shortcut = QAction("Toggle Control Panel", self)
@@ -140,18 +135,6 @@ class TabbedControlPanel(QWidget):
         self.expand_animation.finished.connect(self.on_expand_finished)
         self.collapse_animation.finished.connect(self.on_collapse_finished)
         
-    def setup_connections(self):
-        """Setup signal connections between tabs and main panel"""
-        # Camera tab connections
-        self.camera_tab.connect_clicked.connect(self.connect_clicked.emit)
-        self.camera_tab.disconnect_clicked.connect(self.disconnect_clicked.emit)
-        self.camera_tab.preview_clicked.connect(self.preview_clicked.emit)
-        
-        # Preview tab connections
-        self.preview_tab.aspect_ratio_changed.connect(lambda val: self.on_preview_aspect_ratio_changed(val))
-        self.preview_tab.framerate_changed.connect(lambda val: self.on_preview_framerate_changed(val))
-        self.preview_tab.zoom_changed.connect(lambda val: self.on_preview_zoom_changed(val))
-        self.preview_tab.analysis_toggled.connect(lambda val: self.on_preview_analysis_toggled(val))
         
     def on_expand_finished(self):
         """Handle expand animation finished"""
@@ -176,7 +159,7 @@ class TabbedControlPanel(QWidget):
         self.expand_animation.setEndValue(self.expanded_width)
         self.expand_animation.start()
         
-        self.panel_toggled.emit(True)
+        event_bus.control_panel_toggled.emit(True)
         
     def collapse_panel(self):
         """Collapse the panel"""
@@ -190,7 +173,7 @@ class TabbedControlPanel(QWidget):
         self.collapse_animation.setEndValue(self.collapsed_width)
         self.collapse_animation.start()
         
-        self.panel_toggled.emit(False)
+        event_bus.control_panel_toggled.emit(False)
         
     def toggle_panel(self):
         """Toggle the panel between expanded and collapsed states"""
@@ -199,8 +182,8 @@ class TabbedControlPanel(QWidget):
         else:
             self.expand_panel()
             
-    def on_tab_changed(self, index):
-        """Handle tab changes - clicking an open tab collapses the panel"""
+    def _on_tab_changed(self, index):
+        """Handle tab changes - clicking an open tab collapses the panel and emit tab_changed"""
         if self.is_expanded and index == self.previous_tab_index:
             # If clicking the same tab that's already open, collapse the panel
             self.collapse_panel()
@@ -224,16 +207,6 @@ class TabbedControlPanel(QWidget):
     def update_camera_status(self, status):
         """Update camera status in camera tab"""
         self.camera_tab.update_camera_status(status)
-
-    # --- Preview tab signal handlers (to be connected externally) ---
-    def on_preview_aspect_ratio_changed(self, keep):
-        pass  # To be connected externally
-    def on_preview_framerate_changed(self, fps):
-        pass  # To be connected externally
-    def on_preview_zoom_changed(self, zoom):
-        pass  # To be connected externally
-    def on_preview_analysis_toggled(self, enabled):
-        pass  # To be connected externally
 
     def get_preview_aspect_ratio(self):
         return self.preview_tab.get_aspect_ratio()

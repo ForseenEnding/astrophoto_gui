@@ -3,8 +3,9 @@ from PySide6.QtWidgets import (
     QGroupBox, QFormLayout, QMessageBox
 )
 from PySide6.QtCore import Signal, QTimer
-from core.camera.camera_controller import CameraStatus, camera_controller
-from gui.widgets.setting_profile_box import SettingProfileBox, ProfileMode
+from core.camera.camera_manager import CameraStatus, CameraStatusChangedEvent, camera_manager
+from core.camera.preview_manager import preview_manager
+from gui.widgets.setting_profile_widget import SettingProfileBox, ProfileMode
 from pathlib import Path
 from datetime import datetime
 import logging
@@ -12,17 +13,11 @@ import logging
 class CameraTab(QWidget):
     """Camera connection and info tab"""
     
-    # Signals
-    connect_clicked = Signal()
-    disconnect_clicked = Signal()
-    preview_clicked = Signal()
     
     def __init__(self):
         super().__init__()
-        self.preview_active = False
-        self.preview_timer = QTimer()
-        self.preview_timer.timeout.connect(self.capture_preview)
         self.setup_ui()
+        self.setup_connections()
         
     def setup_ui(self):
         """Setup the camera tab UI"""
@@ -56,7 +51,6 @@ class CameraTab(QWidget):
                 background-color: #3a3a3a;
             }
         """)
-        self.connect_btn.clicked.connect(self.connect_clicked.emit)
         
         self.disconnect_btn = QPushButton("Disconnect")
         self.disconnect_btn.setStyleSheet("""
@@ -76,7 +70,6 @@ class CameraTab(QWidget):
                 background-color: #3a3a3a;
             }
         """)
-        self.disconnect_btn.clicked.connect(self.disconnect_clicked.emit)
         self.disconnect_btn.setEnabled(False)
         
         button_layout.addWidget(self.connect_btn)
@@ -109,7 +102,6 @@ class CameraTab(QWidget):
                 color: #888888;
             }
         """)
-        self.capture_btn.clicked.connect(self.capture_image)
         self.capture_btn.setEnabled(False)
         button_row.addWidget(self.capture_btn)
         
@@ -136,7 +128,6 @@ class CameraTab(QWidget):
                 color: #888888;
             }
         """)
-        self.preview_btn.clicked.connect(self.toggle_preview)
         self.preview_btn.setEnabled(False)
         button_row.addWidget(self.preview_btn)
         
@@ -179,16 +170,25 @@ class CameraTab(QWidget):
         layout.addWidget(self.setting_profile_box)
         layout.addStretch()
         
-    def update_camera_status(self, status: CameraStatus):
+    def setup_connections(self):
+        """Setup signal connections between tabs and main panel"""
+        # Camera tab connections
+        self.connect_btn.clicked.connect(lambda: camera_manager.connect())
+        self.disconnect_btn.clicked.connect(lambda: camera_manager.disconnect())
+        self.preview_btn.clicked.connect(self.toggle_preview)
+        self.capture_btn.clicked.connect(self.capture_image)
+        camera_manager.camera_status_changed.connect(self.update_camera_status)
+        
+    def update_camera_status(self, event: CameraStatusChangedEvent):
         """Update the camera status display"""
-        if status == CameraStatus.CONNECTED:
+        if event.status == CameraStatus.CONNECTED:
             self.status_label.setText("Camera: Connected")
             self.status_label.setStyleSheet("color: #66ff66; font-weight: bold; font-size: 12px;")
             self.connect_btn.setEnabled(False)
             self.disconnect_btn.setEnabled(True)
             self.capture_btn.setEnabled(True)
             self.preview_btn.setEnabled(True)
-        elif status == CameraStatus.DISCONNECTED:
+        elif event.status == CameraStatus.DISCONNECTED:
             self.status_label.setText("Camera: Disconnected")
             self.status_label.setStyleSheet("color: #ff6666; font-weight: bold; font-size: 12px;")
             self.connect_btn.setEnabled(True)
@@ -218,7 +218,7 @@ class CameraTab(QWidget):
         """Capture an image with the current settings profile"""
         try:
             # Check if camera is connected
-            if camera_controller.get_status() != CameraStatus.CONNECTED:
+            if camera_manager.get_status() != CameraStatus.CONNECTED:
                 QMessageBox.warning(self, "Camera Not Connected", "Please connect to a camera first.")
                 return
                 
@@ -242,7 +242,7 @@ class CameraTab(QWidget):
             filename = f"capture_{timestamp}"
             
             # Capture the image
-            captured_files = camera_controller.capture_image(captures_dir / filename)
+            captured_files = camera_manager.capture_image(captures_dir / filename)
             
             if captured_files:
                 logging.info(f"Image captured: {captured_files}")
@@ -255,7 +255,7 @@ class CameraTab(QWidget):
             
     def toggle_preview(self):
         """Toggle live preview on/off"""
-        if self.preview_active:
+        if preview_manager.get_live_preview_active():
             self.stop_preview()
         else:
             self.start_preview()
@@ -263,7 +263,7 @@ class CameraTab(QWidget):
     def start_preview(self):
         """Start live preview at 10 FPS"""
         try:
-            if camera_controller.get_status() != CameraStatus.CONNECTED:
+            if camera_manager.get_status() != CameraStatus.CONNECTED:
                 QMessageBox.warning(self, "Camera Not Connected", "Please connect to a camera first.")
                 return
                 
@@ -297,10 +297,8 @@ class CameraTab(QWidget):
                     background-color: #bb0000;
                 }
             """)
-            
-            # Start timer at 10 FPS (100ms interval)
-            self.preview_timer.start(100)
-            self.preview_clicked.emit()
+            preview_manager.set_live_preview_active(True)
+            preview_manager.set_framerate(10)
             logging.info("Live preview started at 10 FPS")
             
         except Exception as e:
@@ -309,8 +307,6 @@ class CameraTab(QWidget):
             
     def stop_preview(self):
         """Stop live preview"""
-        self.preview_active = False
-        self.preview_timer.stop()
         self.preview_btn.setText("Live Preview")
         self.preview_btn.setStyleSheet("""
             QPushButton {
@@ -334,18 +330,23 @@ class CameraTab(QWidget):
                 color: #888888;
             }
         """)
+        preview_manager.set_live_preview_active(False)
         logging.info("Live preview stopped")
         
     def capture_preview(self):
         """Capture a preview image"""
         try:
-            if camera_controller.get_status() == CameraStatus.CONNECTED:
-                image_data = camera_controller.capture_preview()
-                # Emit signal for main window to handle preview display
-                # The main window will handle setting the image in the preview widget
-                self.preview_clicked.emit()
+            if camera_manager.get_status() == CameraStatus.CONNECTED:
+                camera_manager.capture_preview()
+                preview_manager.set_live_preview_active(True)
                 logging.debug("Preview image captured")
         except Exception as e:
             logging.error(f"Error capturing preview: {e}")
             # Stop preview on error
             self.stop_preview() 
+            
+    def _on_connect_clicked(self):
+        camera_manager.connect()
+        
+    def _on_disconnect_clicked(self):
+        camera_manager.disconnect()

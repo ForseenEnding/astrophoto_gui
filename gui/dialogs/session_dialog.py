@@ -7,8 +7,8 @@ from PySide6.QtCore import Qt, Signal
 from core.session.sessions import Session, session_manager, SessionState
 from core.camera.camera_settings import SettingProfile, default_profile
 from core.equipment.equipment import equipment_manager
-from gui.widgets.setting_profile_box import SettingProfileBox, ProfileMode
-from gui.widgets.equipment_dialog import EquipmentDialog
+from gui.widgets.setting_profile_widget import SettingProfileBox, ProfileMode
+from gui.dialogs.equipment_dialog import EquipmentDialog
 import logging
 
 logger = logging.getLogger(__name__)
