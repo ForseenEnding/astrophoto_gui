@@ -49,7 +49,8 @@ class AnalysisManager(QObject):
     
     def _on_image_captured(self, event: CameraImageCapturedEvent):
         for image_path in event.image_paths:
-            if image_path.endswith(('.jpg', '.jpeg', '.png', '.tiff', '.tif')):
+            extension = image_path.suffix.lower()
+            if extension in ('.jpg', '.jpeg', '.png', '.tiff', '.tif'):
                 self._emit_image_ready(event.image_id, image_path)
             else:
                 logger.debug(f"Skipping analysis of {image_path} because it is not a supported image format")
