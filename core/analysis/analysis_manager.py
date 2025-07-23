@@ -49,7 +49,7 @@ class AnalysisManager(QObject):
     
     def _on_image_captured(self, event: CameraImageCapturedEvent):
         for image_path in event.image_paths:
-            extension = image_path.suffix.lower()
+            extension = image_path.split('.')[-1].lower()
             if extension in ('.jpg', '.jpeg', '.png', '.tiff', '.tif'):
                 self._emit_image_ready(event.image_id, image_path)
             else:
