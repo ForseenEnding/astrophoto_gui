@@ -5,10 +5,12 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Signal, QTimer
 from core.camera.camera_manager import CameraStatus, CameraStatusChangedEvent, camera_manager
 from core.camera.preview_manager import preview_manager
-from gui.widgets.setting_profile_widget import SettingProfileBox, ProfileMode
+from gui.widgets.setting_profile_widget import SettingProfileBox, ProfileMode, SettingProfile
 from pathlib import Path
 from datetime import datetime
 import logging
+
+logger = logging.getLogger(__name__)
 
 class CameraTab(QWidget):
     """Camera connection and info tab"""
@@ -178,6 +180,7 @@ class CameraTab(QWidget):
         self.preview_btn.clicked.connect(self.toggle_preview)
         self.capture_btn.clicked.connect(self.capture_image)
         camera_manager.camera_status_changed.connect(self.update_camera_status)
+        self.setting_profile_box.setting_profile_changed.connect(self.on_profile_updated)
         
     def update_camera_status(self, event: CameraStatusChangedEvent):
         """Update the camera status display"""
@@ -214,6 +217,13 @@ class CameraTab(QWidget):
         if serial:
             self.camera_serial_label.setText(serial)
             
+    def on_profile_updated(self, profile: SettingProfile):
+        """Update the setting profile display"""
+        logger.debug(f"Profile updated: {profile.name}")
+        applied = profile.apply()
+        if not applied:
+            logger.error(f"Failed to apply profile: {profile.name}")
+        
     def capture_image(self):
         """Capture an image with the current settings profile"""
         try:
@@ -298,8 +308,6 @@ class CameraTab(QWidget):
                 }
             """)
             preview_manager.set_live_preview_active(True)
-            preview_manager.set_framerate(10)
-            logging.info("Live preview started at 10 FPS")
             
         except Exception as e:
             logging.error(f"Error starting preview: {e}")

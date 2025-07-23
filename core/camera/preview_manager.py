@@ -1,6 +1,9 @@
 from PySide6.QtCore import QObject, Signal, QRunnable, QThreadPool
 import time
 from core.camera.camera_manager import camera_manager, CameraStatus
+import logging
+
+logger = logging.getLogger(__name__)
 
 class PreviewTask(QRunnable):
     
@@ -11,13 +14,13 @@ class PreviewTask(QRunnable):
     def run(self):
         """Run the preview task"""
         while True:
-            start = time.time()
+            logger.debug(f"Preview task running, framerate: {self._preview_manager.get_framerate()}, live preview active: {self._preview_manager.get_live_preview_active()}")
             if camera_manager.get_status() != CameraStatus.CONNECTED or self._preview_manager.get_framerate() <= 0 or not self._preview_manager.get_live_preview_active():
                 time.sleep(1)
                 continue
             
             camera_manager.capture_preview()
-            sleep_time = 1 / self._preview_manager.get_framerate() - (time.time() - start)
+            sleep_time = (1 / self._preview_manager.get_framerate()) 
             if sleep_time > 0:
                 time.sleep(sleep_time)
 

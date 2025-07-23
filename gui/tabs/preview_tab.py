@@ -100,6 +100,7 @@ class PreviewTab(QWidget):
         self.framerate_spinbox.valueChanged.connect(lambda: preview_manager.set_framerate(self.framerate_spinbox.value()))
         self.zoom_spinbox.valueChanged.connect(lambda: preview_manager.set_zoom(self.zoom_spinbox.value()))
         self.analysis_checkbox.toggled.connect(lambda: analysis_manager.analyze_previews(self.analysis_checkbox.isChecked()))
+        self.analysis_checkbox.toggled.connect(lambda: analysis_manager.analyze_images(self.analysis_checkbox.isChecked()))
 
     def set_aspect_ratio(self, keep: bool):
         self.aspect_ratio_checkbox.setChecked(keep)

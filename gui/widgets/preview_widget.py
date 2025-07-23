@@ -2,14 +2,17 @@ import os
 from pathlib import Path
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel,
-    QSizePolicy, QScrollArea
+    QSizePolicy, QScrollArea, QSplitter
 )
 from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtGui import QPixmap, QImage
 from core.analysis.analysis_manager import analysis_manager
 from core.camera.preview_manager import preview_manager
-from core.camera.camera_manager import camera_manager, PreviewImageCapturedEvent
+from core.camera.camera_manager import camera_manager, PreviewImageCapturedEvent, CameraImageCapturedEvent
 import logging
+from gui.widgets.histogram_widget import HistogramGraphWidget
+from gui.widgets.focus_widget import FocusWidget
+from gui.widgets.analysis_widget import AnalysisWidget
 
 logger = logging.getLogger(__name__)
 
@@ -25,13 +28,17 @@ class PreviewWidget(QWidget):
         super().__init__()
         self.setup_ui()
         self.current_image = None
+        self.current_image_id = None
+        
         camera_manager.preview_image_captured.connect(self.on_preview_image_captured)
+        camera_manager.image_captured.connect(self.on_image_captured)
         
     def setup_ui(self):
         """Setup the preview widget UI"""
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         
+        splitter = QSplitter(Qt.Vertical)
         # Create scroll area for large images
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
@@ -56,9 +63,31 @@ class PreviewWidget(QWidget):
         self.image_label.setText("No Image Available")
         
         self.scroll_area.setWidget(self.image_label)
-        layout.addWidget(self.scroll_area)
+        splitter.addWidget(self.scroll_area)
         
-    def set_image(self, image_data: bytes = None, image_path: str = None):
+        # Add analysis widget below the image
+        self.analysis_widget = AnalysisWidget(self)
+        splitter.addWidget(self.analysis_widget)
+        
+        layout.addWidget(splitter)
+        
+    def on_preview_image_captured(self, event: PreviewImageCapturedEvent):
+        self.set_image(image_id=event.image_id, image_data=event.image_data)
+
+    def on_image_captured(self, event: CameraImageCapturedEvent):
+        """Handle image captured events. Optionally update session statistics via session_tab."""
+        if not event.image_paths:
+            logger.debug("No images captured")
+            return
+        
+        preview_file = self._get_preview_file(event.image_paths)
+        if preview_file:
+            logger.debug(f"Using {preview_file} for preview")
+            self.set_image(image_id=event.image_id, image_path=preview_file)
+        else:
+            logger.debug("No suitable preview file found")
+  
+    def set_image(self, image_id: str, image_data: bytes = None, image_path: str = None):
         """Set the image to display from bytes or file path"""
         pixmap = None
         
@@ -79,6 +108,7 @@ class PreviewWidget(QWidget):
             pixmap = QPixmap(image_path)
         
         if pixmap and not pixmap.isNull():
+            self.current_image_id = image_id
             self.current_image = pixmap
             self.update_display()
         else:
@@ -126,47 +156,6 @@ class PreviewWidget(QWidget):
         """Set the zoom factor for the image"""
         preview_manager.set_zoom(zoom)
         self.update_display() 
-
-    def set_analysis_enabled(self, enabled: bool):
-        analysis_manager.analyze_previews(enabled)
-        self.update_display()
-
-    def start_preview(self, framerate=None):
-        """Start live preview"""
-        preview_manager.set_live_preview_active(True)
-        if framerate is not None:
-            preview_manager.set_framerate(framerate)
-
-    def stop_preview(self):
-        """Stop live preview"""
-        preview_manager.set_live_preview_active(False)
-
-    def update_preview_framerate(self, fps: int):
-        """Update the preview framerate"""
-        preview_manager.set_framerate(fps)
-
-    def capture_preview(self):
-        """Capture a preview image (to be filled in after moving logic)"""
-        pass
-
-    def on_preview_image_captured(self, event: PreviewImageCapturedEvent):
-        """Handle preview image captured events"""
-        logger.debug(f"Preview image captured, data type: {type(event.image_data)}, size: {len(event.image_data) if hasattr(event.image_data, '__len__') else 'unknown'}")
-        self.set_image(image_data=event.image_data)
-
-    def on_image_captured(self, event, session_tab=None):
-        """Handle image captured events. Optionally update session statistics via session_tab."""
-        if not event.image_paths:
-            logger.debug("No images captured")
-            return
-        if session_tab:
-            session_tab.increment_image_count()
-        preview_file = self._get_preview_file(event.image_paths)
-        if preview_file:
-            logger.debug(f"Using {preview_file} for preview")
-            self.set_image(image_path=preview_file)
-        else:
-            logger.debug("No suitable preview file found")
 
     def _get_preview_file(self, saved_files: list) -> str:
         """

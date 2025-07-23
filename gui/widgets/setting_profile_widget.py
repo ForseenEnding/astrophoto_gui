@@ -753,7 +753,6 @@ class SettingProfileBox(QGroupBox):
         # Update the profile in settings_profiles
         if settings_profiles.add_profile(updated_profile):
             logger.info(f"Profile '{updated_profile.name}' saved successfully.")
-            # Update our local reference
-            self.setting_profile = updated_profile
+            self.set_setting_profile(updated_profile)
         else:
             logger.error(f"Failed to save profile '{updated_profile.name}'.")

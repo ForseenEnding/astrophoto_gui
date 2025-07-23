@@ -484,8 +484,9 @@ QTabBar::tab {
 }
 
 QTabBar::tab:selected {
-    background-color: #2a2a2a;
-    border-bottom: 1px solid #2a2a2a;
+    background-color: #444466; /* More distinct color for selected tab */
+    border-bottom: 2px solid #8b0000; /* Accent color for selection */
+    color: #ffcc00; /* Highlight text color */
 }
 
 QTabBar::tab:hover {
